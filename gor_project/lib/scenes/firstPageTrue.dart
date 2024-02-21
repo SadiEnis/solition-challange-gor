@@ -16,10 +16,26 @@ class _TruePageState extends State<TruePage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text("True(!)"),
+          backgroundColor: Colors.amber,
         ),
-        body: Center(
-          child: PotraitPlayer(link: trueUrl, aspectRatio: 16 / 9),
+        backgroundColor: Colors.lightBlue,
+        body: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            Image.asset('lib/assets/back.png'),
+            Positioned(
+              child: Container(
+                margin: EdgeInsets.only(right: 25, left: 25, top: 100),
+                child: Column(
+                  children: <Widget>[
+                    Center(
+                      child: PotraitPlayer(link: trueUrl, aspectRatio: 16 / 9),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );

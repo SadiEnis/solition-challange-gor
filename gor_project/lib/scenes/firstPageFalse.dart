@@ -8,12 +8,31 @@ class FalsePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-          appBar: AppBar(),
-          body: Center(
-            child: PotraitPlayer(
-                link: 'https://www.youtube.com/watch?v=-4FjHTnFAQQ',
-                aspectRatio: 16 / 9),
-          )),
+        appBar: AppBar(
+          backgroundColor: Colors.amber,
+        ),
+        backgroundColor: Colors.lightBlue,
+        body: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            Image.asset('lib/assets/back.png'),
+            Positioned(
+              child: Container(
+                margin: EdgeInsets.only(right: 25, left: 25, top: 100),
+                child: Column(
+                  children: <Widget>[
+                    Center(
+                      child: PotraitPlayer(
+                          link: 'https://www.youtube.com/watch?v=-4FjHTnFAQQ',
+                          aspectRatio: 16 / 9),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

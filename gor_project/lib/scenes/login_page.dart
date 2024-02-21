@@ -1,138 +1,77 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gor_project/main.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
-  final _tName = TextEditingController();
-  final _tEmail = TextEditingController();
-  final _tPassword = TextEditingController();
-  final _tAvatar = TextEditingController();
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Login"),
-          backgroundColor: Colors.amber,
-        ),
-        body: buildBody(),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Login"),
       ),
-    );
-  }
-
-  Widget buildBody() {
-    return Container(
-      margin: EdgeInsets.all(20.0),
-      child: Form(
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
-            TextFormField(
-              decoration:
-                  InputDecoration(labelText: "Parent Name", hintText: "John"),
-              onSaved: (value) {
-                if (value != null) {}
-              },
-            ),
-            TextFormField(
+            TextField(
+              controller: _emailController,
               decoration: InputDecoration(
-                  labelText: "Email", hintText: "john@example.com"),
-              onSaved: (value) {
-                if (value != null) {}
-              },
+                  labelText: 'Email',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15))),
             ),
-            TextFormField(
-              decoration: InputDecoration(labelText: "Password"),
-              onSaved: (value) {
-                if (value != null) {}
-              },
+            SizedBox(height: 16.0),
+            TextField(
+              controller: _passwordController,
+              decoration: InputDecoration(
+                  labelText: 'Password',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15))),
+              obscureText: true,
             ),
-            buildAvatarField(),
+            SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: () async {
+                try {
+                  await _firebaseAuth.signInWithEmailAndPassword(
+                    email: _emailController.text.trim(),
+                    password: _passwordController.text.trim(),
+                  );
+                  // Giriş başarılıysa yapılacak işlemler
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => MainPage()));
+                } catch (e) {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text("Wrong!!"),
+                          content: Text("Email or password is not true."),
+                        );
+                      });
+                }
+              },
+              child: Text('Login'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Kayıt ekranına yönlendirme
+              },
+              child: Text('Register Now (not working)'),
+            ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget buildAvatarField() {
-    return Container(
-      margin: EdgeInsets.only(top: 25.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.only(right: 5, left: 5),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                shape: CircleBorder(),
-                padding: EdgeInsets.all(0),
-                //fixedSize: Size.fromHeight(70),
-              ),
-              child: const CircleAvatar(
-                radius: 40,
-                backgroundImage: AssetImage("./lib/assets/elephant.png"),
-                backgroundColor: Colors.white54,
-              ),
-              onPressed: () {
-                print("test1");
-              },
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(right: 5, left: 5),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                shape: CircleBorder(),
-                padding: EdgeInsets.all(0),
-                //fixedSize: Size.fromHeight(70),
-              ),
-              child: const CircleAvatar(
-                radius: 40,
-                backgroundImage: AssetImage("./lib/assets/graffe.png"),
-                backgroundColor: Colors.white54,
-              ),
-              onPressed: () {
-                print("test2");
-              },
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(right: 5, left: 5),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                shape: CircleBorder(),
-                padding: EdgeInsets.all(0),
-                //fixedSize: Size.fromHeight(70),
-              ),
-              child: const CircleAvatar(
-                radius: 40,
-                backgroundImage: AssetImage("./lib/assets/turtle.png"),
-                backgroundColor: Colors.white54,
-              ),
-              onPressed: () {
-                print("test3");
-              },
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(right: 5, left: 5),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                shape: CircleBorder(),
-                padding: EdgeInsets.all(0),
-                //fixedSize: Size.fromHeight(70),
-              ),
-              child: const CircleAvatar(
-                radius: 40,
-                backgroundImage: AssetImage("./lib/assets/racoon.png"),
-                backgroundColor: Colors.white54,
-              ),
-              onPressed: () {
-                print("test4");
-              },
-            ),
-          ),
-        ],
       ),
     );
   }

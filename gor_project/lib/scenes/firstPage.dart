@@ -25,44 +25,59 @@ class _FirstPageState extends State<_FirstPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Video Question"),
+        title: Text("Video"),
         backgroundColor: Colors.amber,
       ),
-      body: Column(children: <Widget>[
-        PotraitPlayer(link: mainUrl, aspectRatio: 16 / 9),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            IconButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const FalsePage()));
-              },
-              icon: Icon(
-                Icons.clear,
-                color: Colors.red,
-                size: 100,
-              ),
+      backgroundColor: Colors.lightBlue,
+      body: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[
+          Image.asset('lib/assets/back.png'),
+          Positioned(
+            child: Container(
+              margin: EdgeInsets.only(right: 30, left: 30, top: 50),
+              child: Column(children: <Widget>[
+                Column(children: <Widget>[
+                  PotraitPlayer(link: mainUrl, aspectRatio: 16 / 9),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const FalsePage()));
+                        },
+                        icon: Icon(
+                          Icons.clear,
+                          color: Colors.red,
+                          size: 100,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const TruePage()));
+                          });
+                        },
+                        icon: Icon(
+                          Icons.check_circle,
+                          color: Colors.green,
+                          size: 100,
+                        ),
+                      ),
+                    ],
+                  )
+                ]),
+              ]),
             ),
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  dispose();
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const TruePage()));
-                });
-              },
-              icon: Icon(
-                Icons.check_circle,
-                color: Colors.green,
-                size: 100,
-              ),
-            ),
-          ],
-        )
-      ]),
+          )
+        ],
+      ),
     );
   }
 }
