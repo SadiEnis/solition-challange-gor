@@ -1,6 +1,6 @@
-# gor_project
+# GOR
 
-A new Flutter project.
+A Flutter project for Solution Challenge.
 
 ## Getting Started
 
